@@ -1,0 +1,27 @@
+name: Get changes
+on: push
+jobs:
+  changedfiles:
+    runs-on: ubuntu-latest
+    outputs:
+      all: ${{ steps.changes.outputs.all }}
+    #   server: ${{ steps.changes.outputs.server }}
+    #   client: ${{ steps.changes.outputs.client }}
+    steps:
+      # Make sure we have some code to diff.
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Get changed files
+        id: changes
+        # Set outputs using the command.
+        run: |
+          echo "all=$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | xargs) >> $GITHUB_OUTPUT"
+  echo:
+    runs-on: ubuntu-latest
+    # require the first job to have ran
+    needs: changedfiles
+    # only run there are changed files
+    if: ${{needs.changedfiles.outputs.all}}
+    steps:
+      - name: echo changed files
+        run: echo ${{needs.changedfiles.outputs.all}}
