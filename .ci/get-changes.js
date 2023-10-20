@@ -1,7 +1,7 @@
 module.exports = async ({ github, context, core }) => {
   try {
     // Create GitHub client with the API token.
-    const client = github;
+    const client = github.rest;
     const format = "space-delimited";
 
     // Ensure that the format parameter is set properly.
