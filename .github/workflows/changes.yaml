@@ -17,7 +17,7 @@ jobs:
         with:
           script: |
             const script = require('./.ci/get-changes.js')
-            await script({github, context})
+            await script({github, context, core})
           result-encoding: string
 
   echo:

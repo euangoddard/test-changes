@@ -1,4 +1,4 @@
-module.exports = async ({ github, context }) => {
+module.exports = async ({ github, context, core }) => {
   try {
     // Create GitHub client with the API token.
     const client = github;
